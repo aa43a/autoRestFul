@@ -1,0 +1,18 @@
+/*==============================================================*/
+/* Table: camera                                                */
+/*==============================================================*/
+create table camera (
+   device_id            VARCHAR(100)         not null,
+   id_in_system         VARCHAR(100)         null,
+   ptz_control          NUMERIC              null,
+   alarm_column_id      VARCHAR(100)         null,
+   install_date         TIMESTAMP            null,
+   constraint PK_CAMERA primary key (device_id)
+);
+
+/*==============================================================*/
+/* Index: Index_camera_licensecode                              */
+/*==============================================================*/
+create  index Index_camera_licensecode on camera (
+alarm_column_id
+);

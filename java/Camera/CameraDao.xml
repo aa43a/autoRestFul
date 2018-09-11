@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+"-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace ="com.gmi.its.itsmain.dao.CameraDao">
+	<insert id="insertCamera" parameterType="com.gmi.its.itsmain.model.Camera">
+		insert into camera(
+			device_id,id_in_system,ptz_control,alarm_column_id,install_date
+		)
+		values(
+			#{device_id},#{id_in_system},#{ptz_control},#{alarm_column_id},to_timestamp(#{install_date},'yyyy-MM-dd HH24:mi:ss')
+		);
+	</insert>
+	<update id="updateCamera" parameterType="com.gmi.its.itsmain.model.Camera">
+		update camera
+		<set>
+			<if test="item.deviceId != null ">device_id=#{item.deviceId},</if>
+			<if test="item.idInSystem != null ">id_in_system=#{item.idInSystem},</if>
+			<if test="item.ptzControl != null ">ptz_control=#{item.ptzControl},</if>
+			<if test="item.alarmColumnId != null ">alarm_column_id=#{item.alarmColumnId},</if>
+			<if test="item.installDate != null ">install_date=to_timestamp(#{item.installDate},'yyyy-MM-dd HH24:mi:ss')</if>
+		</set>
+		where device_id =#{item.deviceId},
+	</update>
+	<delete id="deleteCamera">
+		delete from camera where device_id in
+		<foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+			#{item}</foreach>
+	</delete>
+	<select id="selectCamera" resultType="com.gmi.its.itsmain.model.Camera">
+		select
+			device_id as deviceId,
+			id_in_system as idInSystem,
+			ptz_control as ptzControl,
+			alarm_column_id as alarmColumnId,
+			install_date as installDate
+		from camera
+		where 1=1
+		<if test="deviceId != null and deviceId != '' ">
+			and device_id=#{deviceId}</if>
+	</select>
+</mapper >

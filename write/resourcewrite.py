@@ -1,0 +1,87 @@
+import os
+import os.path
+import write.condefine as cf
+import config as conf
+
+def resourcewrite (tabletotal):
+	servicename = cf.classname[0].lower() + cf.classname[1:]
+	path = 'java\\'+cf.classname +'\\' +cf.classname+ cf.resourcesfile
+	isExists=os.path.exists(path)
+	if not isExists:
+		print (path+' 创建成功')
+	else:
+		print (path+' 目录已存在')
+		f = open('java\\'+ cf.classname+'\\' +cf.classname+ cf.resourcesfile,"r+")
+		read_data = f.read()
+		f.seek(0)
+		f.truncate()
+		f.close()
+	f1 = open('java\\'+ cf.classname+'\\' +cf.classname + cf.resourcesfile,'a') 
+	str = cf.modelpackage + " " + conf.packagetxt + "resources;"
+	f1.write (str + '\n')
+	for x in cf.resourcelines:
+		f1.write ('\n'+x)
+	f1.write ('\n\n')
+	f1.write ('import ' + conf.packagetxt + cf.xmlmodel + cf.classname)
+	f1.write (';\n')
+	f1.write ('import ' + conf.packagetxt + 'service.' + cf.classname+'Service')
+	f1.write (';\n\n')
+	f1.write ('@Path("'+servicename+'")\n')
+	f1.write ('@Produces("application/json;charset=utf-8")\n')
+	f1.write ('@Component\n')
+	f1.write ('public class ' + cf.classname + "Resource {")
+	f1.write ('\n\t@Autowired')
+	f1.write ('\n\tprivate ' + cf.classname +"Service ")
+	
+	f1.write (servicename +"Service;")
+	f1.write ("\n\n\t@POST")
+	f1.write ('\n\t@Path("/'+cf.classname+'")')
+	f1.write ('\n\tpublic Response '+cf.xmlinsert + cf.classname +'(')
+	f1.write (cf.classname + ' ' + servicename + ') {')
+	f1.write ('\n\t\ttry {')
+	f1.write ('\n\t\t\t' + servicename + 'Service.' +cf.xmlinsert + cf.classname +'(' + servicename +');')
+	f1.write ('\n\t\t\treturn Response.status(Status.OK).entity("SUCCESS").build();' )
+	f1.write ('\n\t\t} catch (Exception e) {' )
+	f1.write ('\n\t\t\treturn Response.status(Status.BAD_REQUEST).entity("ERROR").build();' )
+	f1.write ('\n\t\t}' )
+	f1.write ('\n\t}' )
+	
+	f1.write ("\n\n\t@PUT")
+	f1.write ('\n\t@Path("/'+cf.classname+'")')
+	f1.write ('\n\tpublic Response '+cf.xmlupdate + cf.classname +'(')
+	f1.write (cf.classname + ' ' + servicename + ') {')
+	f1.write ('\n\t\ttry {')
+	f1.write ('\n\t\t\t' + servicename + 'Service.' +cf.xmlupdate + cf.classname +'(' + servicename +');')
+	f1.write ('\n\t\t\treturn Response.status(Status.OK).entity("SUCCESS").build();' )
+	f1.write ('\n\t\t} catch (Exception e) {' )
+	f1.write ('\n\t\t\treturn Response.status(Status.BAD_REQUEST).entity("ERROR").build();' )
+	f1.write ('\n\t\t}' )
+	f1.write ('\n\t}' )
+	
+	f1.write ("\n\n\t@DELETE")
+	f1.write ('\n\t@Path("/'+cf.classname+'")')
+	f1.write ('\n\tpublic Response '+cf.xmldelete + cf.classname +'(')
+	f1.write ('@QueryParam("'+tabletotal[0][0] + '") String ' + tabletotal[0][0]  + ') {')
+	f1.write ('\n\t\ttry {')
+	f1.write ('\n\t\t\tString[] ' + servicename + 's = ' + tabletotal[0][0] + '.split(",");')
+	f1.write ('\n\t\t\t' + servicename + 'Service.' +cf.xmldelete + cf.classname +'(' + servicename +'s);')
+	f1.write ('\n\t\t\treturn Response.status(Status.OK).entity("SUCCESS").build();' )
+	f1.write ('\n\t\t} catch (Exception e) {' )
+	f1.write ('\n\t\t\treturn Response.status(Status.BAD_REQUEST).entity("ERROR").build();' )
+	f1.write ('\n\t\t}' )
+	f1.write ('\n\t}' )
+	
+	f1.write ("\n\n\t@GET")
+	f1.write ('\n\t@Path("/'+cf.classname+'")')
+	f1.write ('\n\tpublic Response '+cf.xmlselect + cf.classname +'(')
+	f1.write ('@QueryParam("'+tabletotal[0][0] + '") String ' + tabletotal[0][0]  + ') {')
+	f1.write ('\n\t\ttry {')
+	f1.write ('\n\t\t\tList<' + cf.classname + '> ' + servicename+ ' = ')
+	f1.write (servicename + 'Service.' +cf.xmlselect + cf.classname +'(' + tabletotal[0][0] +');')
+	f1.write ('GenericEntity<List<'+cf.classname+'>> entity = new GenericEntity<List<'+cf.classname+'>>('+servicename+') {};')
+	f1.write ('\n\t\t\treturn Response.status(Status.OK).entity(entity).build();' )
+	f1.write ('\n\t\t} catch (Exception e) {' )
+	f1.write ('\n\t\t\treturn Response.status(Status.BAD_REQUEST).entity("ERROR").build();' )
+	f1.write ('\n\t\t}' )
+	f1.write ('\n\t}' )
+	f1.write ('\n}')
