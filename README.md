@@ -4,7 +4,7 @@ give a create table sql auto generate restful and process file
 py autoRestFul.py
 
  process 
- Table.java              ---model
+ Table.java              ---model 
  TableDao.xml            ---mybatis xml
  TableDao.java           ---Dao
  TableService.java       ---Service interface
