@@ -2,7 +2,8 @@
 give a create table sql auto generate restful and process file
 =======
 py autoRestFul.py
-
+<br>  
+<br>  
  process 
  Table.java              ---model <br>  
  TableDao.xml            ---mybatis xml <br>  
@@ -11,7 +12,7 @@ py autoRestFul.py
  TableServiceImpl.java   ---ServiceImpl  <br>  
  TableResource.java      ---Resource RestfulLink    @GET  @PUT  @POST  @DELETE /table/Table   <br>  
 
-config.py
+config.py <br>  
 
 rootfile = "sql.txt"    //sql path <br>  
 xmlitem = "item"        //variable param <br>  
